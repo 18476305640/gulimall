@@ -1,0 +1,23 @@
+#server:
+#  port: 7000
+#spring:
+#  datasource:
+#    username: root
+#    password: 3333
+#    # 如果下面不加 ?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai 写入数据库中中文乱码
+#    url: jdbc:mysql://192.168.87.101:3306/gulimall_sms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: 192.168.87.101:8848  #将该服务注册到nacos中
+#  application:
+#    name: gulimall-coupon  #应用名称，在nacos注册中心服务组名
+## MapperScan
+## sql映射文件位置
+#mybatis-plus:
+#  mapper-locations: classpath:/mapper/**/*.xml
+#  global-config:
+#    db-config:
+#      id-type: auto
+#
