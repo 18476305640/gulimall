@@ -1,10 +1,13 @@
 package com.zhuangjie.gulimall.product.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
 import lombok.Data;
 
 /**
@@ -56,5 +59,9 @@ public class CategoryEntity implements Serializable {
 	 * 商品数量
 	 */
 	private Integer productCount;
+
+
+	@TableField(exist = false) //申明此字段不在数据库存在，但代码中需要用到它，通知Mybatis-plus在做写库操作是忽略它。
+	private List<CategoryEntity> children;
 
 }
