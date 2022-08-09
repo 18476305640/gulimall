@@ -1,3 +1,5 @@
+server:
+  port: 10000
 spring:
   datasource:
     username: root
@@ -5,7 +7,13 @@ spring:
     # 如果下面不加 ?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai 写入数据库中中文乱码
     url: jdbc:mysql://192.168.87.101:3306/gulimall_pms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
-
+  cloud:
+    nacos:
+      discovery:
+        #nacos 注册中心
+        server-addr: 192.168.87.101:8848
+  application:
+    name: gulimall-product
 # MapperScan
 # sql映射文件位置
 mybatis-plus:
@@ -13,5 +21,10 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto
-
+      #逻辑删除配置
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+logging:
+  level:
+    com.zhuangjie.gulimall: debug
 
