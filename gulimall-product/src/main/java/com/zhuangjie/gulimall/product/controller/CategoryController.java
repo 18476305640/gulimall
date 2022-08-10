@@ -57,6 +57,7 @@ public class CategoryController {
         return R.ok();
     }
 
+
     /**
      * 修改
      */
@@ -64,6 +65,15 @@ public class CategoryController {
     public R update(@RequestBody CategoryEntity category){
 		categoryService.updateById(category);
 
+        return R.ok();
+    }
+    /**
+     * 批量修改
+     */
+    @RequestMapping("/update/sort")
+    public R updateSort(@RequestBody CategoryEntity[] categorys){
+        System.out.println("后端正在批量修改中");
+        categoryService.updateBatchById(Arrays.asList(categorys));
         return R.ok();
     }
 
@@ -75,6 +85,7 @@ public class CategoryController {
 		categoryService.removeMenuByIds(Arrays.asList(ids));
         return R.ok();
     }
+
 
 
 }
