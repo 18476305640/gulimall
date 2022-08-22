@@ -1,9 +1,14 @@
 package com.zhuangjie.gulimall.product.controller;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
+import com.zhuangjie.gulimall.product.valid.AddGroup;
+import com.zhuangjie.gulimall.product.valid.UpdateGroup;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +20,7 @@ import com.zhuangjie.gulimall.product.service.BrandService;
 import com.zhuangjie.common.utils.PageUtils;
 import com.zhuangjie.common.utils.R;
 
+import javax.validation.Valid;
 
 
 /**
@@ -35,6 +41,7 @@ public class BrandController {
      */
     @RequestMapping("/list")
     public R list(@RequestParam Map<String, Object> params){
+        System.out.println("参数："+params);
         PageUtils page = brandService.queryPage(params);
 
         return R.ok().put("page", page);
@@ -55,7 +62,8 @@ public class BrandController {
      * 保存
      */
     @RequestMapping("/save")
-    public R save(@RequestBody BrandEntity brand){
+    public R save(@Validated({AddGroup.class}) @RequestBody BrandEntity brand){
+
 		brandService.save(brand);
 
         return R.ok();
@@ -65,9 +73,8 @@ public class BrandController {
      * 修改
      */
     @RequestMapping("/update")
-    public R update(@RequestBody BrandEntity brand){
+    public R update(@Validated({UpdateGroup.class}) @RequestBody BrandEntity brand){
 		brandService.updateById(brand);
-
         return R.ok();
     }
 
