@@ -18,4 +18,28 @@
     </resultMap>
 
 
+    <resultMap id="attrVoMap" type="AttrVo" >
+        <result property="catelogName" column="name"></result>
+
+    </resultMap>
+
+    <select id="queryAttrByCategoryIdAndKey" resultMap="attrVoMap">
+        select * from pms_attr attr
+        left join pms_attr_attrgroup_relation relation on attr.attr_id = relation.attr_id
+        left join pms_attr_group attr_group on relation.attr_group_id = attr_group.attr_group_id
+        LEFT JOIN pms_category category on category.cat_id = attr.catelog_id
+        <where>
+            <if test="type != null" >
+                attr.attr_type = #{type}
+            </if>
+            <if test="categoryId != null and categoryId != 0 " >
+                and attr.catelog_id = #{categoryId}
+            </if>
+            <if test="key != null and key != '' " >
+                and (attr.attr_id = #{key} or  attr.attr_name like concat('%',#{key},'%'))
+            </if>
+        </where>
+    </select>
+
+
 </mapper>

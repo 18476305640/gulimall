@@ -12,7 +12,7 @@ spring:
       discovery:
         server-addr: 192.168.87.101:8848  #将该服务注册到nacos中
     application:
-      name: member  #应用名称，在nacos注册中心服务组名
+      name: gulimall-member  #应用名称，在nacos注册中心服务组名
   application:
     name: gulimall-member
 # MapperScan

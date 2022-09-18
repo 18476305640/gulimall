@@ -4,9 +4,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.zhuangjie.gulimall.product.entity.CategoryBrandRelationEntity;
+import com.zhuangjie.gulimall.product.service.CategoryBrandRelationService;
 import com.zhuangjie.gulimall.product.valid.AddGroup;
 import com.zhuangjie.gulimall.product.valid.UpdateGroup;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,14 +41,14 @@ public class BrandController {
     @Autowired
     private BrandService brandService;
 
+
+
     /**
      * 列表
      */
     @RequestMapping("/list")
     public R list(@RequestParam Map<String, Object> params){
-        System.out.println("参数："+params);
         PageUtils page = brandService.queryPage(params);
-
         return R.ok().put("page", page);
     }
 
@@ -63,7 +68,6 @@ public class BrandController {
      */
     @RequestMapping("/save")
     public R save(@Validated({AddGroup.class}) @RequestBody BrandEntity brand){
-
 		brandService.save(brand);
 
         return R.ok();
@@ -72,9 +76,14 @@ public class BrandController {
     /**
      * 修改
      */
+    @Transactional
     @RequestMapping("/update")
     public R update(@Validated({UpdateGroup.class}) @RequestBody BrandEntity brand){
 		brandService.updateById(brand);
+
+		// 更新的时间还要维护 “pms_category_brand_relation” 冗余的字段 brandName
+        brandService.updateCategoryBrandRelationNameColumnByBrandId(brand.getBrandId());
+
         return R.ok();
     }
 

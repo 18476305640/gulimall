@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 /**
@@ -63,6 +64,7 @@ public class CategoryEntity implements Serializable {
 	private Integer productCount;
 
 
+//	@JsonInclude(JsonInclude.Include.NON_EMPTY) 如果这样做就能实现功能，但违反了开闭原则
 	@TableField(exist = false) //申明此字段不在数据库存在，但代码中需要用到它，通知Mybatis-plus在做写库操作是忽略它。
 	private List<CategoryEntity> children;
 

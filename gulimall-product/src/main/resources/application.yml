@@ -24,6 +24,7 @@ mybatis-plus:
       #逻辑删除配置
       logic-delete-value: 1
       logic-not-delete-value: 0
+  type-aliases-package: com.zhuangjie.gulimall.product
 logging:
   level:
     com.zhuangjie.gulimall: debug

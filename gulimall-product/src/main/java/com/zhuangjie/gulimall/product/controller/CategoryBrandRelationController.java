@@ -1,8 +1,14 @@
 package com.zhuangjie.gulimall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.zhuangjie.gulimall.product.entity.BrandEntity;
+import com.zhuangjie.gulimall.product.entity.CategoryEntity;
+import com.zhuangjie.gulimall.product.service.BrandService;
+import com.zhuangjie.gulimall.product.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +21,7 @@ import com.zhuangjie.gulimall.product.service.CategoryBrandRelationService;
 import com.zhuangjie.common.utils.PageUtils;
 import com.zhuangjie.common.utils.R;
 
+import javax.validation.constraints.NotNull;
 
 
 /**
@@ -30,14 +37,25 @@ public class CategoryBrandRelationController {
     @Autowired
     private CategoryBrandRelationService categoryBrandRelationService;
 
+    /*http://localhost/api/product/categorybrandrelation
+    /brands/list?t=1661590427715&catId=363*/
+
+
+
+    @RequestMapping("/brands/list")
+    public R brandsList(@RequestParam(value = "catId",required = true) Long catId){
+        List<BrandEntity> brands =  categoryBrandRelationService.getRelationBrandsByCategoryId(catId);
+        return R.ok().put("data", brands);
+    }
     /**
      * 列表
      */
     @RequestMapping("/list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = categoryBrandRelationService.queryPage(params);
-
-        return R.ok().put("page", page);
+    public R list(@RequestParam("brandId") Long brandId){
+        QueryWrapper<CategoryBrandRelationEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("brand_id",brandId);
+        List<CategoryBrandRelationEntity> list = categoryBrandRelationService.list(queryWrapper);
+        return R.ok().put("data", list);
     }
 
 
@@ -51,12 +69,22 @@ public class CategoryBrandRelationController {
         return R.ok().put("categoryBrandRelation", categoryBrandRelation);
     }
 
+    @Autowired
+    private CategoryService categoryService;
+    @Autowired
+    private BrandService brandService;
     /**
      * 保存
      */
     @RequestMapping("/save")
-    public R save(@RequestBody CategoryBrandRelationEntity categoryBrandRelation){
-		categoryBrandRelationService.save(categoryBrandRelation);
+    public R save(@RequestBody CategoryBrandRelationEntity categoryBrandRelationEntity){
+
+        CategoryEntity categoryEntity = categoryService.getById(categoryBrandRelationEntity.getCategoryId());
+        BrandEntity brandEntity = brandService.getById( categoryBrandRelationEntity.getBrandId());
+
+        categoryBrandRelationEntity.setBrandName(brandEntity.getName());
+        categoryBrandRelationEntity.setCategoryName(categoryEntity.getName());
+        categoryBrandRelationService.save(categoryBrandRelationEntity);
 
         return R.ok();
     }

@@ -1,5 +1,9 @@
 package com.zhuangjie.gulimall.product.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.zhuangjie.gulimall.product.entity.CategoryBrandRelationEntity;
+import com.zhuangjie.gulimall.product.service.CategoryBrandRelationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +24,8 @@ import com.zhuangjie.gulimall.product.service.CategoryService;
 
 @Service("categoryService")
 public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity> implements CategoryService {
+    @Autowired
+    private CategoryBrandRelationService categoryBrandRelationService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -52,6 +58,18 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     @Override
     public void removeMenuByIds(List<Long> ids) {
         baseMapper.deleteBatchIds(ids);
+    }
+
+    @Override
+    public void updateCategoryBrandRelationTableCategoryNameColumnByCategoryId(Long catId) {
+        // 当category更新时，修改 “pms_category_brand_relation” 表的 冗余字段 "category_name"
+        CategoryEntity categoryEntity = baseMapper.selectById(catId);
+        UpdateWrapper<CategoryBrandRelationEntity> categoryBrandRelationEntityUpdateWrapper = new UpdateWrapper<>();
+        categoryBrandRelationEntityUpdateWrapper
+                .set("category_name",categoryEntity.getName())
+                .eq("category_id",categoryEntity.getCatId());
+        categoryBrandRelationService.update(categoryBrandRelationEntityUpdateWrapper);
+
     }
 
 

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import com.zhuangjie.gulimall.product.entity.CategoryEntity;
@@ -43,7 +44,6 @@ public class CategoryController {
     @RequestMapping("/info/{catId}")
     public R info(@PathVariable("catId") Long catId){
 		CategoryEntity category = categoryService.getById(catId);
-
         return R.ok().put("category", category);
     }
 
@@ -61,10 +61,12 @@ public class CategoryController {
     /**
      * 修改
      */
+    @Transactional
     @RequestMapping("/update")
     public R update(@RequestBody CategoryEntity category){
 		categoryService.updateById(category);
-
+        // 当category更新时，修改 “pms_category_brand_relation” 表的 冗余字段 "category_name"
+		categoryService.updateCategoryBrandRelationTableCategoryNameColumnByCategoryId(category.getCatId());
         return R.ok();
     }
     /**
