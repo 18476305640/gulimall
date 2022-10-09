@@ -3,12 +3,9 @@ package com.zhuangjie.gulimall.coupon.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.zhuangjie.common.to.SkuReductionTo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.zhuangjie.gulimall.coupon.entity.SkuFullReductionEntity;
 import com.zhuangjie.gulimall.coupon.service.SkuFullReductionService;
@@ -40,6 +37,11 @@ public class SkuFullReductionController {
         return R.ok().put("page", page);
     }
 
+    @PostMapping("/saveinfo")
+    public R saveInfo(@RequestBody SkuReductionTo reductionTo){
+        skuFullReductionService.saveSkuReduction(reductionTo);
+        return R.ok();
+    }
 
     /**
      * 信息

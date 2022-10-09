@@ -9,7 +9,7 @@
             *
         FROM
             pms_attr attr
-            LEFT JOIN pms_attr_attrgroup_relation relation ON axttr.attr_id = relation.attr_id
+            LEFT JOIN pms_attr_attrgroup_relation relation ON attr.attr_id = relation.attr_id
         WHERE
             relation.attr_group_id = #{attrGroupId}
 
