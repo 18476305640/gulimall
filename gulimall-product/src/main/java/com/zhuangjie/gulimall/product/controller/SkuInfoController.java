@@ -40,6 +40,7 @@ public class SkuInfoController {
     }
 
 
+
     /**
      * 信息
      */
@@ -49,6 +50,7 @@ public class SkuInfoController {
 
         return R.ok().put("skuInfo", skuInfo);
     }
+
 
     /**
      * 保存

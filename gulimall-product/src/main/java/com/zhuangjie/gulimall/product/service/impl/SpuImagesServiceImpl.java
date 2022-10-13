@@ -19,7 +19,6 @@ import com.zhuangjie.gulimall.product.service.SpuImagesService;
 
 @Service("spuImagesService")
 public class SpuImagesServiceImpl extends ServiceImpl<SpuImagesDao, SpuImagesEntity> implements SpuImagesService {
-
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         IPage<SpuImagesEntity> page = this.page(
