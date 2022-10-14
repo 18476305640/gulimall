@@ -7,15 +7,11 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@MapperScan("com.zhuangjie.gulimall.ware.dao")
 @EnableDiscoveryClient
-@EnableTransactionManagement
 @EnableFeignClients
 @SpringBootApplication
 public class WareApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(WareApplication.class, args);
     }
-
 }
