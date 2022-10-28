@@ -3,6 +3,8 @@ package com.zhuangjie.gulimall.product.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhuangjie.gulimall.product.vo.AttrVo;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -39,6 +41,16 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         Page<AttrEntity> attrEntityPage = new Page<>(page,limit);
         Page<AttrVo> attrVoPage = baseMapper.queryAttrByCategoryIdAndKey(attrEntityPage, categoryId,type, key);
         return new PageUtils(attrVoPage);
+    }
+
+    @Override
+    public List<Long> selectSearchAttrIds(List<Long> attrIds) {
+
+        /**
+         * SELECT attr_id FROM `pms_attr` WHERE attr_id IN(?) AND search_type = 1
+         */
+        return baseMapper.selectSearchAttrIds(attrIds);
+
     }
 
 }

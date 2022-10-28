@@ -22,12 +22,12 @@ public class MallExceptionControllerAdvice {
             errMap.put(field,message);
         });
         System.out.println("统一异常处理"+e.getClass());
-        return R.error(BizCodeEnum.VALID_EXCEPTION.getCode(),BizCodeEnum.VALID_EXCEPTION.getMessage()).put("data",errMap);
+        return R.error(BizCodeEnum.VAILD_EXCEPTION.getCode(),BizCodeEnum.VAILD_EXCEPTION.getMsg()).put("data",errMap);
     }
     @ExceptionHandler(Exception.class)
     public R allException(Exception e) {
         log.error("出现问题{}，异常类型：{}",e.getMessage(),e.getClass());
-        return R.error(BizCodeEnum.UNKNOWN_EXCEPTION.getCode(),BizCodeEnum.UNKNOWN_EXCEPTION.getMessage());
+        return R.error(BizCodeEnum.UNKNOW_EXCEPTION.getCode(),BizCodeEnum.UNKNOW_EXCEPTION.getMsg());
     }
 
 }

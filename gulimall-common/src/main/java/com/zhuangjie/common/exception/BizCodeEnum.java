@@ -14,24 +14,28 @@ package com.zhuangjie.common.exception;
  * @author ZSY
  */
 public enum BizCodeEnum {
-    /**
-     * 系统未知异常
-     */
-    UNKNOWN_EXCEPTION(10000, "系统未知异常"),
-    /**
-     * 参数校验错误
-     */
-    VALID_EXCEPTION(10001, "参数格式校验失败");
-    private final int code;
-    private final String message;
-    private BizCodeEnum(int code,String message) {
+    UNKNOW_EXCEPTION(10000,"系统未知异常"),
+    VAILD_EXCEPTION(10001,"参数格式校验失败"),
+    TOO_MANY_REQUEST(10002,"请求流量过大"),
+    SMS_CODE_EXCEPTION(10002,"验证码获取频率太高，稍后再试"),
+    PRODUCT_UP_EXCEPTION(11000,"商品上架异常"),
+    USER_EXIST_EXCEPTION(15001,"用户存在"),
+    PHONE_EXIST_EXCEPTION(15002,"手机号存在"),
+    NO_STOCK_EXCEPTION(21000,"商品库存不足"),
+    LOGINACCT_PASSWORD_INVAILD_EXCEPTION(15003,"账号密码错误");
+
+    private int code;
+    private String msg;
+    BizCodeEnum(int code,String msg){
         this.code = code;
-        this.message = message;
+        this.msg = msg;
     }
+
     public int getCode() {
-        return this.code;
+        return code;
     }
-    public String getMessage() {
-        return this.message;
+
+    public String getMsg() {
+        return msg;
     }
 }

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhuangjie.common.utils.PageUtils;
 import com.zhuangjie.gulimall.product.entity.AttrEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,5 +20,6 @@ public interface AttrService extends IService<AttrEntity> {
 
     PageUtils queryAttr(Long categoryId, Integer type, Map<String, Object> params);
 
+    List<Long> selectSearchAttrIds(List<Long> attrIds);
 }
 

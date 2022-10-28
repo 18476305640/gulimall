@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableDiscoveryClient //开启服务发现 - nacos
 @SpringBootApplication
 public class ProductApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(ProductApplication.class, args);
     }

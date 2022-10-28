@@ -19,6 +19,5 @@ import java.util.List;
 @Mapper
 public interface AttrDao extends BaseMapper<AttrEntity> {
     Page<AttrVo> queryAttrByCategoryIdAndKey(@Param("page") Page<AttrEntity> page, @Param("categoryId") Long categoryId,@Param("type") Integer type,  @Param("key") String key);
-
-	
+    List<Long> selectSearchAttrIds(@Param("attrIds") List<Long> attrIds);
 }

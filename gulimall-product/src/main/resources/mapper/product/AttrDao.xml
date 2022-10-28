@@ -3,7 +3,7 @@
 
 <mapper namespace="com.zhuangjie.gulimall.product.dao.AttrDao">
 
-	<!-- 可根据自己的需求，是否要使用 -->
+    <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.zhuangjie.gulimall.product.entity.AttrEntity" id="attrMap">
         <result property="attrId" column="attr_id"/>
         <result property="attrName" column="attr_name"/>
@@ -20,7 +20,6 @@
 
     <resultMap id="attrVoMap" type="AttrVo" >
         <result property="catelogName" column="name"></result>
-
     </resultMap>
 
     <select id="queryAttrByCategoryIdAndKey" resultMap="attrVoMap">
@@ -39,6 +38,16 @@
                 and (attr.attr_id = #{key} or  attr.attr_name like concat('%',#{key},'%'))
             </if>
         </where>
+    </select>
+
+
+
+    <select id="selectSearchAttrIds" resultType="java.lang.Long">
+        SELECT attr_id FROM `pms_attr` WHERE attr_id IN
+        <foreach collection="attrIds" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+        AND search_type = 1
     </select>
 
 

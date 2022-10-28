@@ -1,0 +1,20 @@
+# 应用名称
+spring:
+  application:
+    name: gulimall-search
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.87.101:8848
+  elasticsearch:
+    rest:
+      uris: ["192.168.87.101:9200"]
+#management:
+#  health:
+#    elasticsearch:
+#      enabled: false
+server:
+  port: 12000
+
+
+
