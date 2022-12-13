@@ -9,6 +9,8 @@ spring:
   elasticsearch:
     rest:
       uris: ["192.168.87.101:9200"]
+  thymeleaf:
+    cache: false
 #management:
 #  health:
 #    elasticsearch:

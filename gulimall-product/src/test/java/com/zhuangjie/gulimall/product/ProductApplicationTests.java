@@ -1,25 +1,36 @@
-//package com.zhuangjie.gulimall.product;
-//
-//import com.aliyun.oss.ClientException;
-//import com.aliyun.oss.OSS;
-//import com.aliyun.oss.OSSClientBuilder;
-//import com.aliyun.oss.OSSException;
-//import com.zhuangjie.gulimall.product.entity.BrandEntity;
-//import com.zhuangjie.gulimall.product.service.BrandService;
-//import org.junit.jupiter.api.Test;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.context.SpringBootTest;
-//
-//import java.io.FileInputStream;
-//import java.io.FileNotFoundException;
-//import java.io.InputStream;
-//
-//@SpringBootTest
-//class ProductApplicationTests {
-//
-//    @Autowired
-//    private BrandService brandService;
-//
+package com.zhuangjie.gulimall.product;
+
+import com.zhuangjie.gulimall.product.entity.BrandEntity;
+import com.zhuangjie.gulimall.product.service.BrandService;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.UUID;
+
+@SpringBootTest
+class ProductApplicationTests {
+
+    @Autowired
+    private BrandService brandService;
+
+    @Autowired
+    StringRedisTemplate stringRedisTemplate;
+    @Test
+    void redisTest () {
+        ValueOperations<String, String> stringStringValueOperations = stringRedisTemplate.opsForValue();
+        // 保存
+        stringStringValueOperations.set("hello", UUID.randomUUID().toString());
+        // 查询
+        String hello = stringStringValueOperations.get("hello");
+        System.out.println("之前存储的值："+hello);
+
+    }
 //    @Test
 //    void contextLoads() {
 //        BrandEntity brandEntity = new BrandEntity();
@@ -58,5 +69,5 @@
 //            }
 //        }
 //    }
-//
-//}
+
+}
