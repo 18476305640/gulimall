@@ -40,7 +40,7 @@ public class IndexController {
 
 
 
-    @GetMapping("/index/catalog")
+    @GetMapping("/index/ctalog")
     @ResponseBody
     public Object catalog2and3() {
 //        HashMap<String, List<Catelog2Vo>> catelog2Vos =  categoryService.getCatalog2and3();
