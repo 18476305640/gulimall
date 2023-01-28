@@ -3,6 +3,7 @@ package com.zhuangjie.gulimall.product.dao;
 import com.zhuangjie.gulimall.product.entity.AttrEntity;
 import com.zhuangjie.gulimall.product.entity.AttrGroupEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.zhuangjie.gulimall.product.vo.SpuItemAttrGroupVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,4 +20,7 @@ import java.util.List;
 public interface AttrGroupDao extends BaseMapper<AttrGroupEntity> {
 
     List<AttrEntity> queryAttrsByAttrgroupId(@Param("attrGroupId") Long attrGroupId);
+
+    List<SpuItemAttrGroupVo> getAttrGroupWithAttrsBySpuId(@Param("spuId") Long spuId, @Param("catalogId") Long catalogId);
+
 }

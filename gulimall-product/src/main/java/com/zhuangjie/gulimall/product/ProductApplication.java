@@ -14,6 +14,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableDiscoveryClient //开启服务发现 - nacos
 @SpringBootApplication
 @EnableCaching
+//@MapperScan("com.zhuangjie.gulimall.product.dao")
 public class ProductApplication {
     public static void main(String[] args) {
         SpringApplication.run(ProductApplication.class, args);
