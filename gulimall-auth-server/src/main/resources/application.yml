@@ -1,0 +1,21 @@
+server:
+  port: 20000
+spring:
+  application:
+    name: gulimall-auth-server
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.87.101:8848
+  # 禁用thymeleaf缓存
+  thymeleaf:
+    cache: false
+  redis:
+    host: 192.168.87.101
+    port: 6379
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 2000  #单位毫秒
+        readTimeout: 3000

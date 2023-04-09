@@ -45,6 +45,7 @@ public class R<T> extends HashMap<String, Object> {
 		return t;
 	}
 
+
 	public void setData(T data) {
 		this.data = data;
 	}

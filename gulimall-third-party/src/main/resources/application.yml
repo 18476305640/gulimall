@@ -14,6 +14,13 @@ spring:
         endpoint: oss-cn-shanghai.aliyuncs.com
         #默认没有这个属性，我们自己写的
         bucket: gulimall-zhuangjie-resource
+  notify:
+    sms:
+      host: https://gyytz.market.alicloudapi.com
+      path: /sms/smsSend
+      sign: 30fa725601884ec1875338dd6719b5ed
+      skin: 9d7d67e3ce42423dbc1e570813dc0f8a
+      appcode: 410bce9766324e1ca9c0a72f3a4fffd6
 
 
 
