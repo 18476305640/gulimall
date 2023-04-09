@@ -4,6 +4,12 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+/**
+ * 通知短信配置
+ *
+ * @author zhuangjie
+ * @date 2023/04/09
+ */
 @ConfigurationProperties(prefix = "spring.notify.sms")
 @Data
 @Component

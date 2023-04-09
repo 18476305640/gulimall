@@ -1,6 +1,7 @@
-package com.zhuangjie.gulimall.thirdparty.component.notification.service;
+package com.zhuangjie.gulimall.thirdparty.component.notification.service.impl;
 
 import com.zhuangjie.gulimall.thirdparty.component.notification.config.NotifySmsConfig;
+import com.zhuangjie.gulimall.thirdparty.component.notification.service.SmsService;
 import com.zhuangjie.gulimall.thirdparty.utils.HttpUtils;
 import lombok.Data;
 import org.apache.http.HttpResponse;
@@ -12,14 +13,18 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 @Component
-@Lazy
-public class AliyunSmsService implements SmsService{
+public class AliyunSmsService implements SmsService {
 
     @Autowired
     private NotifySmsConfig notifySmsConfig;
 
     @Override
-    public void sendCode(String mobile, String code) throws Exception {
+    public void sendHandle(String target, String content) throws Exception {}
+
+    @Override
+    public void sendCodeHandle(String mobile, String code) throws Exception {
+        System.out.println("使用阿里短信服务...");
+        if (true) return;
         String method = "POST";
         String validTime = "5";
 
@@ -34,7 +39,6 @@ public class AliyunSmsService implements SmsService{
         querys.put("templateId", notifySmsConfig.getSkin());
         Map<String, String> bodys = new HashMap<String, String>();
 
-
         /**
          * 重要提示如下:
          * HttpUtils请从\r\n\t    \t* https://github.com/aliyun/api-gateway-demo-sign-java/blob/master/src/main/java/com/aliyun/api/gateway/demo/util/HttpUtils.java\r\n\t    \t* 下载
@@ -43,6 +47,5 @@ public class AliyunSmsService implements SmsService{
          * https://github.com/aliyun/api-gateway-demo-sign-java/blob/master/pom.xml
          */
         HttpUtils.doPost(notifySmsConfig.getHost(), notifySmsConfig.getPath(), method, headers, querys, bodys);
-
     }
 }

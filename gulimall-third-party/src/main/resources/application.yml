@@ -21,6 +21,10 @@ spring:
       sign: 30fa725601884ec1875338dd6719b5ed
       skin: 9d7d67e3ce42423dbc1e570813dc0f8a
       appcode: 410bce9766324e1ca9c0a72f3a4fffd6
+    email:
+      host: smtp.qq.com
+      auth-key: ehfgrgyrsdmecdhc
+      from: 2119299531@qq.com
 
 
 
