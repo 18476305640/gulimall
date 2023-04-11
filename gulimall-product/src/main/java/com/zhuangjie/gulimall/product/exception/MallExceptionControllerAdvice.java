@@ -1,6 +1,6 @@
 package com.zhuangjie.gulimall.product.exception;
 
-import com.zhuangjie.common.exception.BizCodeEnum;
+import com.zhuangjie.common.exception.BizCodeEnume;
 import com.zhuangjie.common.utils.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -22,12 +22,12 @@ public class MallExceptionControllerAdvice {
             errMap.put(field,message);
         });
         System.out.println("统一异常处理"+e.getClass());
-        return R.error(BizCodeEnum.VAILD_EXCEPTION.getCode(),BizCodeEnum.VAILD_EXCEPTION.getMsg()).put("data",errMap);
+        return R.error(BizCodeEnume.VAILD_EXCEPTION.getCode(), BizCodeEnume.VAILD_EXCEPTION.getMsg()).put("data",errMap);
     }
     @ExceptionHandler(Exception.class)
     public R allException(Exception e) {
         log.error("出现问题{}，异常类型：{}",e.getMessage(),e.getClass());
-        return R.error(BizCodeEnum.UNKNOW_EXCEPTION.getCode(),BizCodeEnum.UNKNOW_EXCEPTION.getMsg());
+        return R.error(BizCodeEnume.UNKNOW_EXCEPTION.getCode(), BizCodeEnume.UNKNOW_EXCEPTION.getMsg());
     }
 
 }

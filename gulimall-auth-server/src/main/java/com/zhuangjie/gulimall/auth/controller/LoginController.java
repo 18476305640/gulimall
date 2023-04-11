@@ -2,8 +2,9 @@ package com.zhuangjie.gulimall.auth.controller;
 
 import com.alibaba.fastjson.TypeReference;
 import com.zhuangjie.common.constant.AuthServerConstant;
-import com.zhuangjie.common.exception.BizCodeEnum;
+import com.zhuangjie.common.exception.BizCodeEnume;
 import com.zhuangjie.common.utils.R;
+import com.zhuangjie.common.vo.MemberRespVo;
 import com.zhuangjie.gulimall.auth.feign.MemberFeignService;
 import com.zhuangjie.gulimall.auth.feign.ThirdPartFeignService;
 import com.zhuangjie.gulimall.auth.vo.UserLoginVo;
@@ -12,7 +13,6 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +20,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -52,7 +51,7 @@ public class LoginController {
             long l = Long.parseLong(redisCode.split("_")[1]);
             if(System.currentTimeMillis() - l < 60000){
                 //60秒内不能再发
-                return R.error(BizCodeEnum.SMS_CODE_EXCEPTION.getCode(),BizCodeEnum.SMS_CODE_EXCEPTION.getMsg());
+                return R.error(BizCodeEnume.SMS_CODE_EXCEPTION.getCode(), BizCodeEnume.SMS_CODE_EXCEPTION.getMsg());
             }
         }
         //2、验证码的再次校验。redis。存key-phone，value-code   sms:code:17512080612 -> 45678
@@ -65,6 +64,7 @@ public class LoginController {
         thirdPartFeignService.sendCode(phone,code);
         return R.ok();
     }
+
 
     @PostMapping("/regist")
     public String regist(@Valid UserRegistVo vo, BindingResult result,
@@ -128,4 +128,27 @@ public class LoginController {
             return "redirect:http://auth.gulimall.com/reg.html";
         }
     }
+
+    @PostMapping("/login")
+    public String login(UserLoginVo vo,RedirectAttributes redirectAttributes,
+                        HttpSession session){
+
+
+        //远程登录
+        R<MemberRespVo> login = memberFeignService.login(vo);
+        if(login.getCode()==0){
+            MemberRespVo data = login.getData("data", new TypeReference<MemberRespVo>() {
+            });
+            ////成功放到session中
+            session.setAttribute(AuthServerConstant.LOGIN_USER,data);
+
+            return "redirect:http://gulimall.com";
+        }else {
+            Map<String,String > errors = new HashMap<>();
+            errors.put("msg", (String) login.getData("msg",new TypeReference<String>(){}));
+            redirectAttributes.addFlashAttribute("errors",errors);
+            return "redirect:http://auth.gulimall.com/login.html";
+        }
+    }
+
 }

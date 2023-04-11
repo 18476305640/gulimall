@@ -6,7 +6,7 @@
  * 版权所有，侵权必究！
  */
 
-package com.zhuangjie.common.utils;
+package com.zhuangjie.common.constant;
 
 
 import com.zhuangjie.common.validator.group.AliyunGroup;

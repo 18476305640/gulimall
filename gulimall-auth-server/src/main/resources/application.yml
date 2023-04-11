@@ -13,9 +13,15 @@ spring:
   redis:
     host: 192.168.87.101
     port: 6379
+  session:
+    store-type: redis
+    timeout: 30m
+
 feign:
   client:
     config:
       default:
         connectTimeout: 2000  #单位毫秒
         readTimeout: 3000
+
+

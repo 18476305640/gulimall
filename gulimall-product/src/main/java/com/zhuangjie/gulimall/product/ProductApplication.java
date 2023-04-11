@@ -6,10 +6,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 /**
  * @author manzhuangjie
  */
+@EnableRedisHttpSession
 @EnableFeignClients(basePackages = "com.zhuangjie.gulimall.product.feign")
 @EnableDiscoveryClient //开启服务发现 - nacos
 @SpringBootApplication

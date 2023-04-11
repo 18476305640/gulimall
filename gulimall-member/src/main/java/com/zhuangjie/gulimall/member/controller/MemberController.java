@@ -3,11 +3,13 @@ package com.zhuangjie.gulimall.member.controller;
 import java.util.Arrays;
 import java.util.Map;
 
-import com.zhuangjie.common.exception.BizCodeEnum;
+import com.zhuangjie.common.exception.BizCodeEnume;
 import com.zhuangjie.gulimall.member.exception.PhoneExsitException;
 import com.zhuangjie.gulimall.member.exception.UsernameExistException;
 import com.zhuangjie.gulimall.member.feign.CouponFeignService;
+import com.zhuangjie.gulimall.member.vo.MemberLoginVo;
 import com.zhuangjie.gulimall.member.vo.MemberRegistVo;
+import com.zhuangjie.gulimall.member.vo.SocialUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,9 +44,9 @@ public class MemberController {
         try{
             memberService.regist(vo);
         }catch (PhoneExsitException e){
-            return R.error(BizCodeEnum.PHONE_EXIST_EXCEPTION.getCode(),BizCodeEnum.PHONE_EXIST_EXCEPTION.getMsg());
+            return R.error(BizCodeEnume.PHONE_EXIST_EXCEPTION.getCode(), BizCodeEnume.PHONE_EXIST_EXCEPTION.getMsg());
         }catch (UsernameExistException e){
-            return R.error(BizCodeEnum.USER_EXIST_EXCEPTION.getCode(),BizCodeEnum.USER_EXIST_EXCEPTION.getMsg());
+            return R.error(BizCodeEnume.USER_EXIST_EXCEPTION.getCode(), BizCodeEnume.USER_EXIST_EXCEPTION.getMsg());
         }
 
         return R.ok();
@@ -88,7 +90,6 @@ public class MemberController {
 
         return R.ok();
     }
-
     /**
      * 修改
      */
@@ -108,5 +109,27 @@ public class MemberController {
 
         return R.ok();
     }
+    @PostMapping("/login")
+    public R login(@RequestBody MemberLoginVo vo){
+
+        MemberEntity entity =  memberService.login(vo);
+        if(entity!=null){
+            return R.ok().data(entity);
+        }else{
+            return R.error(BizCodeEnume.LOGINACCT_PASSWORD_INVAILD_EXCEPTION.getCode(), BizCodeEnume.LOGINACCT_PASSWORD_INVAILD_EXCEPTION.getMsg());
+        }
+    }
+    @PostMapping("/oauth2/login")
+    public R oauthlogin(@RequestBody SocialUser socialUser) throws Exception {
+
+        MemberEntity entity =  memberService.login(socialUser);
+        if(entity!=null){
+            //TODO 1、登录成功处理
+            return R.ok().data(entity);
+        }else{
+            return R.error(BizCodeEnume.LOGINACCT_PASSWORD_INVAILD_EXCEPTION.getCode(), BizCodeEnume.LOGINACCT_PASSWORD_INVAILD_EXCEPTION.getMsg());
+        }
+    }
+
 
 }

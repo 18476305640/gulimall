@@ -1,6 +1,6 @@
 package com.zhuangjie.gulimall.search.controller;
 
-import com.zhuangjie.common.exception.BizCodeEnum;
+import com.zhuangjie.common.exception.BizCodeEnume;
 import com.zhuangjie.common.to.es.SkuEsModel;
 import com.zhuangjie.common.utils.R;
 import com.zhuangjie.gulimall.search.service.ProductSaveService;
@@ -28,13 +28,13 @@ public class ElasticSaveController {
             b = productSaveService.productStatusUp(skuEsModels);
         } catch (Exception e) {
             log.error("ElasticSaveController商品上架错误：{}", e);
-            return R.error(BizCodeEnum.PRODUCT_UP_EXCEPTION.getCode(), BizCodeEnum.PRODUCT_UP_EXCEPTION.getMsg());
+            return R.error(BizCodeEnume.PRODUCT_UP_EXCEPTION.getCode(), BizCodeEnume.PRODUCT_UP_EXCEPTION.getMsg());
         }
 
         if (!b) {
             return R.ok();
         } else {
-            return R.error(BizCodeEnum.PRODUCT_UP_EXCEPTION.getCode(), BizCodeEnum.PRODUCT_UP_EXCEPTION.getMsg());
+            return R.error(BizCodeEnume.PRODUCT_UP_EXCEPTION.getCode(), BizCodeEnume.PRODUCT_UP_EXCEPTION.getMsg());
         }
     }
 }

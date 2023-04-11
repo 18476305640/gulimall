@@ -31,6 +31,9 @@ spring:
       use-key-prefix: true
       # 是否缓存空值，防止缓存穿透
       cache-null-values: true
+  session:
+    store-type: redis
+    timeout: 30m
 
 # MapperScan
 # sql映射文件位置

@@ -1,4 +1,4 @@
-package com.zhuangjie.gulimall.thirdparty.utils;
+package com.zhuangjie.common.utils;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.KeyManagementException;

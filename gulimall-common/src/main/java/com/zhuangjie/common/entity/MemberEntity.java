@@ -1,11 +1,11 @@
-package com.zhuangjie.gulimall.member.entity;
+package com.zhuangjie.common.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 /**
  * 会员
@@ -15,7 +15,6 @@ import lombok.Data;
  * @date 2022-07-22 11:33:33
  */
 @Data
-@TableName("ums_member")
 public class MemberEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 

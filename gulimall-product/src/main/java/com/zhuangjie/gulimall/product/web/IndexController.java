@@ -1,10 +1,10 @@
 package com.zhuangjie.gulimall.product.web;
 
+import com.alibaba.fastjson.JSON;
 import com.zhuangjie.gulimall.product.entity.CategoryEntity;
 import com.zhuangjie.gulimall.product.service.CategoryService;
 import com.zhuangjie.gulimall.product.vo.indexPage.Catelog2Vo;
 import org.redisson.api.*;
-import org.redisson.config.Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
@@ -12,9 +12,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Controller
 public class IndexController {
@@ -25,7 +26,7 @@ public class IndexController {
     private RedisTemplate redisTemplate;
 
     @GetMapping({"/","/index.html"})
-    public String indexPage(Model model){
+    public String indexPage(Model model, HttpSession session){
 
 
         System.out.println(""+Thread.currentThread().getId());
@@ -35,6 +36,11 @@ public class IndexController {
         // 视图解析器进行拼串：
         // classpath:/templates/ +返回值+  .html
         model.addAttribute("categorys",categoryEntities);
+
+        Object loginUser = session.getAttribute("loginUser");
+        System.out.println("--->");
+        System.out.println(JSON.toJSON(loginUser));
+        System.out.println("<---");
         return "index";
     }
 

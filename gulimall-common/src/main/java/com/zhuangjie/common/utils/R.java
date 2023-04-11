@@ -37,6 +37,8 @@ public class R<T> extends HashMap<String, Object> {
 		return t;
 	}
 
+
+
 	//利用fastjson进行逆转
 	public <T> T getData(TypeReference<T> typeReference){
 		Object data = get("data");//默认是map
@@ -48,6 +50,9 @@ public class R<T> extends HashMap<String, Object> {
 
 	public void setData(T data) {
 		this.data = data;
+	}
+	public R data(T data) {
+		return put("data",data);
 	}
 
 	public R() {

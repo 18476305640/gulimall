@@ -13,7 +13,7 @@ package com.zhuangjie.common.exception;
  *  14: 物流
  * @author ZSY
  */
-public enum BizCodeEnum {
+public enum BizCodeEnume {
     UNKNOW_EXCEPTION(10000,"系统未知异常"),
     VAILD_EXCEPTION(10001,"参数格式校验失败"),
     TOO_MANY_REQUEST(10002,"请求流量过大"),
@@ -27,7 +27,7 @@ public enum BizCodeEnum {
 
     private int code;
     private String msg;
-    BizCodeEnum(int code,String msg){
+    BizCodeEnume(int code, String msg){
         this.code = code;
         this.msg = msg;
     }

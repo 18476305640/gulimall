@@ -2,12 +2,9 @@ package com.zhuangjie.gulimall.thirdparty.component.notification.service.impl;
 
 import com.zhuangjie.gulimall.thirdparty.component.notification.config.NotifySmsConfig;
 import com.zhuangjie.gulimall.thirdparty.component.notification.service.SmsService;
-import com.zhuangjie.gulimall.thirdparty.utils.HttpUtils;
-import lombok.Data;
+import com.zhuangjie.common.utils.HttpUtils;
 import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -24,7 +21,6 @@ public class AliyunSmsService implements SmsService {
     @Override
     public void sendCodeHandle(String mobile, String code) throws Exception {
         System.out.println("使用阿里短信服务...");
-        if (true) return;
         String method = "POST";
         String validTime = "5";
 
@@ -46,6 +42,6 @@ public class AliyunSmsService implements SmsService {
          * 相应的依赖请参照
          * https://github.com/aliyun/api-gateway-demo-sign-java/blob/master/pom.xml
          */
-        HttpUtils.doPost(notifySmsConfig.getHost(), notifySmsConfig.getPath(), method, headers, querys, bodys);
+        HttpResponse response = HttpUtils.doPost(notifySmsConfig.getHost(), notifySmsConfig.getPath(), method, headers, querys, bodys);
     }
 }
