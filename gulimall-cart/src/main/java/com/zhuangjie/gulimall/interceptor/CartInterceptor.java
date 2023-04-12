@@ -40,7 +40,7 @@ public class CartInterceptor implements HandlerInterceptor {
             //用户登录
             userInfoTo.setUserId(member.getId());
         }
-
+        // w
         Cookie[] cookies = request.getCookies();
         if(cookies!=null && cookies.length>0){
             for (Cookie cookie : cookies) {
