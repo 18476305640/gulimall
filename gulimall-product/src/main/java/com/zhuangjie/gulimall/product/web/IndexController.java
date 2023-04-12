@@ -36,11 +36,7 @@ public class IndexController {
         // 视图解析器进行拼串：
         // classpath:/templates/ +返回值+  .html
         model.addAttribute("categorys",categoryEntities);
-
-        Object loginUser = session.getAttribute("loginUser");
-        System.out.println("--->");
-        System.out.println(JSON.toJSON(loginUser));
-        System.out.println("<---");
+        System.out.println(categoryEntities);
         return "index";
     }
 

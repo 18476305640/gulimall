@@ -1,0 +1,30 @@
+server:
+  port: 30010
+spring:
+  application:
+    name: gulimall-cart
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.87.101:8848
+  # 禁用thymeleaf缓存
+  thymeleaf:
+    cache: false
+  redis:
+    host: 192.168.87.101
+    port: 6379
+  session:
+    store-type: redis
+    timeout: 30m
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 2000  #单位毫秒
+        readTimeout: 3000
+gulimall:
+  thread:
+    core-size: 20
+    keep-alive-time: 10
+    max-size: 200
