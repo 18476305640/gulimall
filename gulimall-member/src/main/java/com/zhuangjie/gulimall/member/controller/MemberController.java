@@ -3,7 +3,7 @@ package com.zhuangjie.gulimall.member.controller;
 import java.util.Arrays;
 import java.util.Map;
 
-import com.zhuangjie.common.exception.BizCodeEnume;
+import com.zhuangjie.common.enums.BizCodeEnume;
 import com.zhuangjie.gulimall.member.exception.PhoneExsitException;
 import com.zhuangjie.gulimall.member.exception.UsernameExistException;
 import com.zhuangjie.gulimall.member.feign.CouponFeignService;

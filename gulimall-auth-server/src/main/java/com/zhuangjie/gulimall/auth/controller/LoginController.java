@@ -2,7 +2,7 @@ package com.zhuangjie.gulimall.auth.controller;
 
 import com.alibaba.fastjson.TypeReference;
 import com.zhuangjie.common.constant.AuthServerConstant;
-import com.zhuangjie.common.exception.BizCodeEnume;
+import com.zhuangjie.common.enums.BizCodeEnume;
 import com.zhuangjie.common.utils.R;
 import com.zhuangjie.common.vo.MemberRespVo;
 import com.zhuangjie.gulimall.auth.feign.MemberFeignService;

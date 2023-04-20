@@ -9,9 +9,26 @@ spring:
     nacos:
       discovery:
         server-addr: 192.168.87.101:8848
+#    alibaba:
+#      seata:
+#        # 自定义事务组名称需要与seata-server中的对应
+#        tx-service-group: fsp_tx_group
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
-
+  # RabbitMQ配置
+  rabbitmq:
+    host: 192.168.87.101
+    listener:
+      simple:
+        acknowledge-mode: manual
+    port: 5672
+    publisher-confirms: true
+    publisher-returns: true
+    template:
+      mandatory: true
+    virtual-host: /
+    username: guest
+    password: guest
 # MapperScan
 # sql映射文件位置
 mybatis-plus:

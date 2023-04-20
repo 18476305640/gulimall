@@ -5,10 +5,37 @@ spring:
     # 如果下面不加 ?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai 写入数据库中中文乱码
     url: jdbc:mysql://192.168.87.101:3306/gulimall_oms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
+#    type: com.alibaba.druid.pool.DruidDataSource
   cloud:
     nacos:
       discovery:
         server-addr: 192.168.87.101:8848
+#    alibaba:
+#      seata:
+#        tx-service-group: fsp_tx_group
+  redis:
+    host: 192.168.87.101
+    port: 6379
+  # RabbitMQ配置
+  rabbitmq:
+    host: 192.168.87.101
+    username: guest
+    password: guest
+    listener:
+      simple:
+        acknowledge-mode: manual
+    port: 5672
+    publisher-confirms: true
+    publisher-returns: true
+    template:
+      mandatory: true
+    virtual-host: /
+  session:
+    store-type: redis
+    timeout: 30m
+  thymeleaf:
+    cache: false
+
 # MapperScan
 # sql映射文件位置
 mybatis-plus:
@@ -16,3 +43,10 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto
+
+gulimall:
+  # 线程池配置
+  thread:
+    core-size: 20
+    keep-alive-time: 10
+    max-size: 200

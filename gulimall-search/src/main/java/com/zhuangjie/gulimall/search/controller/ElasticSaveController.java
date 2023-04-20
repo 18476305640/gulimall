@@ -1,6 +1,6 @@
 package com.zhuangjie.gulimall.search.controller;
 
-import com.zhuangjie.common.exception.BizCodeEnume;
+import com.zhuangjie.common.enums.BizCodeEnume;
 import com.zhuangjie.common.to.es.SkuEsModel;
 import com.zhuangjie.common.utils.R;
 import com.zhuangjie.gulimall.search.service.ProductSaveService;

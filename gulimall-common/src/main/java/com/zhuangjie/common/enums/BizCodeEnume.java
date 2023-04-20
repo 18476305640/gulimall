@@ -1,4 +1,4 @@
-package com.zhuangjie.common.exception;
+package com.zhuangjie.common.enums;
 /***
  * 错误码和错误信息定义类
  * 1. 错误码定义规则为5为数字

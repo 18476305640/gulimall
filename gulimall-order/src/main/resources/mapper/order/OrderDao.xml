@@ -3,7 +3,7 @@
 
 <mapper namespace="com.zhuangjie.gulimall.order.dao.OrderDao">
 
-	<!-- 可根据自己的需求，是否要使用 -->
+    <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.zhuangjie.gulimall.order.entity.OrderEntity" id="orderMap">
         <result property="id" column="id"/>
         <result property="memberId" column="member_id"/>
@@ -48,6 +48,11 @@
         <result property="commentTime" column="comment_time"/>
         <result property="modifyTime" column="modify_time"/>
     </resultMap>
-
+    <update id="updateOrderStatus">
+        UPDATE `oms_order` SET `status`=#{code} WHERE order_sn=#{outTradeNo}
+    </update>
+<!--    <insert id="insert" >-->
+<!--        insert into oms_order (`id`,`member_id`,`order_sn`,`coupon_id`,`create_time`,`member_username`,`total_amount`,`pay_amount`,`freight_amount`,`promotion_amount`,`integration_amount`,`coupon_amount`,`discount_amount`,`pay_type`,`source_type`,`status`,`delivery_company`,`delivery_sn`,`auto_confirm_day`,`integration`,`growth`,`bill_type`,`bill_header`,`bill_content`,`bill_receiver_phone`,`bill_receiver_email`,`receiver_name`,`receiver_phone`,`receiver_post_code`,`receiver_province`,`receiver_city`,`receiver_region`,`receiver_detail_address`,`note`,`confirm_status`,`delete_status`,`use_integration`,`payment_time`,`delivery_time`,`receive_time`,`comment_time`,`modify_time`) value (#{id},#{member_id},#{order_sn},#{coupon_id},#{create_time},#{member_username},#{total_amount},#{pay_amount},#{freight_amount},#{promotion_amount},#{integration_amount},#{coupon_amount},#{discount_amount},#{pay_type},#{source_type},#{status},#{delivery_company},#{delivery_sn},#{auto_confirm_day},#{integration},#{growth},#{bill_type},#{bill_header},#{bill_content},#{bill_receiver_phone},#{bill_receiver_email},#{receiver_name},#{receiver_phone},#{receiver_post_code},#{receiver_province},#{receiver_city},#{receiver_region},#{receiver_detail_address},#{note},#{confirm_status},#{delete_status},#{use_integration},#{payment_time},#{delivery_time},#{receive_time},#{comment_time},#{modify_time});-->
+<!--    </insert>-->
 
 </mapper>

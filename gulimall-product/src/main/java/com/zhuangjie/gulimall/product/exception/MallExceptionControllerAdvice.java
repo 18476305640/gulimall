@@ -1,6 +1,6 @@
 package com.zhuangjie.gulimall.product.exception;
 
-import com.zhuangjie.common.exception.BizCodeEnume;
+import com.zhuangjie.common.enums.BizCodeEnume;
 import com.zhuangjie.common.utils.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.MethodArgumentNotValidException;
