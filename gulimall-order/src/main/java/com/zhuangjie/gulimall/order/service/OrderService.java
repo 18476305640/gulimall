@@ -3,9 +3,7 @@ package com.zhuangjie.gulimall.order.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhuangjie.common.utils.PageUtils;
 import com.zhuangjie.gulimall.order.entity.OrderEntity;
-import com.zhuangjie.gulimall.order.vo.OrderConfirmVo;
-import com.zhuangjie.gulimall.order.vo.OrderSubmitVo;
-import com.zhuangjie.gulimall.order.vo.SubmitOrderResponseVo;
+import com.zhuangjie.gulimall.order.vo.*;
 
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -29,5 +27,10 @@ public interface OrderService extends IService<OrderEntity> {
 
     void closeOrder(OrderEntity entity);
 
+    PayVo getOrderPay(String orderSn);
+
+    PageUtils queryPageWithItem(Map<String, Object> params);
+
+    String handlePayResult(PayAsyncVo vo);
 }
 

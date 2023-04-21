@@ -8,6 +8,7 @@ import com.zhuangjie.common.utils.R;
 import com.zhuangjie.common.vo.MemberRespVo;
 import com.zhuangjie.gulimall.order.constant.OrderConstant;
 import com.zhuangjie.gulimall.order.entity.OrderItemEntity;
+import com.zhuangjie.gulimall.order.entity.PaymentInfoEntity;
 import com.zhuangjie.gulimall.order.enums.OrderStatusEnum;
 import com.zhuangjie.gulimall.order.feign.CartFeignService;
 import com.zhuangjie.gulimall.order.feign.MemberFeignService;
@@ -15,6 +16,7 @@ import com.zhuangjie.gulimall.order.feign.ProductFeignService;
 import com.zhuangjie.gulimall.order.feign.WmsFeignService;
 import com.zhuangjie.gulimall.order.interceptor.LoginUserInterceptor;
 import com.zhuangjie.gulimall.order.service.OrderItemService;
+import com.zhuangjie.gulimall.order.service.PaymentInfoService;
 import com.zhuangjie.gulimall.order.to.OrderCreateTo;
 import com.zhuangjie.gulimall.order.vo.*;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -25,6 +27,8 @@ import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -69,6 +73,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 
     @Autowired
     OrderItemService orderItemService;
+
+    @Autowired
+    PaymentInfoService paymentInfoService;
 
     private ThreadLocal<OrderSubmitVo> confirmVoThreadLocal = new ThreadLocal<>();
 
@@ -266,6 +273,76 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 
 
         }
+    }
+
+    @Override
+    public PayVo getOrderPay(String orderSn) {
+        PayVo payVo = new PayVo();
+        OrderEntity order = this.getOrderByOrderSn(orderSn);
+
+        BigDecimal bigDecimal = order.getPayAmount().setScale(2, BigDecimal.ROUND_UP);
+        payVo.setTotal_amount(bigDecimal.toString());
+        payVo.setOut_trade_no(order.getOrderSn());
+
+        List<OrderItemEntity> order_sn = orderItemService.list(new QueryWrapper<OrderItemEntity>().eq("order_sn", orderSn));
+        OrderItemEntity entity = order_sn.get(0);
+
+
+        payVo.setSubject(entity.getSkuName());
+        payVo.setBody(entity.getSkuAttrsVals());
+        return payVo;
+    }
+
+    @Override
+    public PageUtils queryPageWithItem(Map<String, Object> params) {
+        MemberRespVo memberRespVo = LoginUserInterceptor.loginUser.get();
+
+        IPage<OrderEntity> page = this.page(
+                new Query<OrderEntity>().getPage(params),
+                new QueryWrapper<OrderEntity>().eq("member_id", memberRespVo.getId()).orderByDesc("id")
+        );
+
+        List<OrderEntity> order_sn = page.getRecords().stream().map(order -> {
+            List<OrderItemEntity> itemEntities = orderItemService.list(new QueryWrapper<OrderItemEntity>().eq("order_sn", order.getOrderSn()));
+            order.setItemEntities(itemEntities);
+            return order;
+        }).collect(Collectors.toList());
+
+        page.setRecords(order_sn);
+
+        return new PageUtils(page);
+    }
+
+    /**
+     * 处理支付宝的支付结果
+     *
+     * @param vo
+     *
+     * @return
+     */
+    @Override
+    public String handlePayResult(PayAsyncVo vo) {
+        //1、保存交易流水
+        PaymentInfoEntity infoEntity = new PaymentInfoEntity();
+        infoEntity.setAlipayTradeNo(vo.getTrade_no());
+        infoEntity.setOrderSn(vo.getOut_trade_no());
+        infoEntity.setPaymentStatus(vo.getTrade_status());
+        try {
+            infoEntity.setCallbackTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(vo.getNotify_time()));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        paymentInfoService.save(infoEntity);
+
+        //2、修改订单的状态信息
+        if (vo.getTrade_status().equals("TRADE_SUCCESS") || vo.getTrade_status().equals("TRADE_FINISHED")) {
+            //支付成功状态
+            String outTradeNo = vo.getOut_trade_no();
+            this.baseMapper.updateOrderStatus(outTradeNo,OrderStatusEnum.PAYED.getCode());
+        }
+        return "success";
     }
 
     /**
