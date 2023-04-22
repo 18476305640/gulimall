@@ -32,17 +32,12 @@ public class OrderPayedListener {
     @PostMapping("/payed/notify")
     public String handleAlipayed(PayAsyncVo vo, HttpServletRequest request) throws AlipayApiException, UnsupportedEncodingException {
         //只要我们收到了支付宝给我们异步的通知，告诉我们订单支付成功。返回success，支付宝就再也不通知
-//        Map<String, String[]> map = request.getParameterMap();
-//        for (String key : map.keySet()) {
-//            String value = request.getParameter(key);
-//            System.out.println("参数名："+key+"==>参数值："+value);
-//        }
         //验签
         Map<String,String> params = new HashMap<String,String>();
         Map<String,String[]> requestParams = request.getParameterMap();
         for (Iterator<String> iter = requestParams.keySet().iterator(); iter.hasNext();) {
-            String name = (String) iter.next();
-            String[] values = (String[]) requestParams.get(name);
+            String name = iter.next();
+            String[] values = requestParams.get(name);
             String valueStr = "";
             for (int i = 0; i < values.length; i++) {
                 valueStr = (i == values.length - 1) ? valueStr + values[i]
@@ -56,14 +51,13 @@ public class OrderPayedListener {
         boolean signVerified = AlipaySignature.rsaCheckV1(params, alipayTemplate.getAlipay_public_key(), alipayTemplate.getCharset(), alipayTemplate.getSign_type()); //调用SDK验证签名
         if(signVerified){
             System.out.println("签名验证成功...");
+            // 处理业务逻辑
             String result = orderService.handlePayResult(vo);
+            // 业务处理成功，返回“success”，这样支付宝就不会通知了
             return result;
         }else {
             System.out.println("签名验证失败...");
             return "error";
         }
-
-
-
     }
 }
